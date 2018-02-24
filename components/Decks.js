@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -24,21 +25,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const Decks = ({ decks }) => (
+const Decks = ({ decks, navigation }) => (
   <View style={styles.container}>
     <FlatList
       data={Object.entries(decks)}
       keyExtractor={item => item[0]}
       renderItem={({ item }) => (
-        <View>
-          <Text style={styles.item}>
-            {item[0]}
-          </Text>
-          <Text style={styles.itemCount}>
-            {`${item[1].questions.length} card${item[1].questions.length !== 1 ? 's' : ''}`}
-          </Text>
-        </View>
-        )}
+        <TouchableOpacity
+          onPress={() => navigation.navigate(
+            'Deck',
+            { deckName: item[0] },
+          )}
+        >
+          <View>
+            <Text style={styles.item}>
+              {item[0]}
+            </Text>
+            <Text style={styles.itemCount}>
+              {`${item[1].questions.length} card${item[1].questions.length !== 1 ? 's' : ''}`}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
     />
   </View>
 );

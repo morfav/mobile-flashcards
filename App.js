@@ -9,7 +9,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import decksReducer from './reducers/decks';
 import Decks from './components/Decks';
 import NewDeck from './components/NewDeck';
-
+import Deck from './components/Deck';
 
 const styles = StyleSheet.create({
   container: {
@@ -65,15 +65,15 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
   },
-  // EventDetails: {
-  //   screen: EventDetails,
-  //   navigationOptions: {
-  //     headerTintColor: 'white',
-  //     headerStyle: {
-  //       backgroundColor: 'blue',
-  //     },
-  //   },
-  // },
+  Deck: {
+    screen: Deck,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'blue',
+      },
+    },
+  },
 });
 
 const App = () => (
