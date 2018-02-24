@@ -1,18 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  item: {
+    textAlign: 'center',
+    fontSize: 24,
+    paddingTop: 30,
+    paddingBottom: 3,
+  },
+  itemCount: {
+    textAlign: 'center',
+    fontSize: 16,
+    paddingBottom: 30,
+    color: 'rgba(0, 0, 0, 0.65)',
+    borderBottomColor: 'rgba(0, 0, 0, 0.70)',
+    borderBottomWidth: 1,
   },
 });
 
 const Decks = ({ decks }) => (
   <View style={styles.container}>
-    {Object.keys(decks).map(deckName => (
-      <Text key={deckName}>{deckName}</Text>))}
+    <FlatList
+      data={Object.entries(decks)}
+      keyExtractor={item => item[0]}
+      renderItem={({ item }) => (
+        <View>
+          <Text style={styles.item}>
+            {item[0]}
+          </Text>
+          <Text style={styles.itemCount}>
+            {`${item[1].questions.length} card${item[1].questions.length !== 1 ? 's' : ''}`}
+          </Text>
+        </View>
+        )}
+    />
   </View>
 );
 
