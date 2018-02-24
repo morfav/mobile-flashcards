@@ -6,7 +6,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'space-around',
     backgroundColor: 'white',
   },
@@ -22,16 +21,20 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     color: 'rgba(0, 0, 0, 0.65)',
   },
+  buttonsView: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
   buttons: {
-    padding: 20,
-    marginLeft: 80,
-    marginRight: 80,
     margin: 5,
     borderWidth: 1,
     borderRadius: 7,
   },
   buttonText: {
     textAlign: 'center',
+    padding: 18,
+    paddingRight: 70,
+    paddingLeft: 70,
     fontSize: 18,
   },
   startQuiz: {
@@ -63,12 +66,18 @@ class Deck extends Component {
           </Text>
         </View>
         <View>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.buttonText}>Add Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.buttons, styles.startQuiz, { marginBottom: 30 }]}>
-            <Text style={[styles.buttonText, { color: 'white' }]}>Start Quiz</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonsView}>
+            <TouchableOpacity style={styles.buttons}>
+              <Text style={styles.buttonText}>Add Card</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <View style={styles.buttonsView}>
+              <TouchableOpacity style={[styles.buttons, styles.startQuiz, { marginBottom: 30 }]}>
+                <Text style={[styles.buttonText, { color: 'white' }]}>Start Quiz</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
     );

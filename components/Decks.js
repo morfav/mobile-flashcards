@@ -12,16 +12,16 @@ const styles = StyleSheet.create({
   item: {
     textAlign: 'center',
     fontSize: 24,
-    paddingTop: 30,
+    paddingTop: 40,
     paddingBottom: 3,
   },
   itemCount: {
     textAlign: 'center',
     fontSize: 16,
-    paddingBottom: 30,
+    paddingBottom: 40,
     color: 'rgba(0, 0, 0, 0.65)',
     borderBottomColor: 'rgba(0, 0, 0, 0.70)',
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
 
@@ -59,7 +59,7 @@ function mapStateToProps(state) {
 
 Decks.propTypes = {
   decks: PropTypes.instanceOf(Object).isRequired,
-  // navigation: PropTypes.instanceOf(Object).isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps)(Decks);
