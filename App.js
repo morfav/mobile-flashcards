@@ -7,6 +7,7 @@ import { Constants } from 'expo';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import decksReducer from './reducers/decks';
+import AddCard from './components/AddCard';
 import Decks from './components/Decks';
 import NewDeck from './components/NewDeck';
 import Deck from './components/Deck';
@@ -68,6 +69,16 @@ const MainNavigator = StackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: {
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'blue',
+      },
+    },
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      title: 'Add Card',
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'blue',

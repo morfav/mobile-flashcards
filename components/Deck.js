@@ -52,7 +52,7 @@ class Deck extends Component {
   }
 
   render() {
-    const { deck, deckName } = this.props;
+    const { deck, deckName, navigation } = this.props;
     return (
       <View style={styles.container}>
         <View>
@@ -67,7 +67,10 @@ class Deck extends Component {
         </View>
         <View>
           <View style={styles.buttonsView}>
-            <TouchableOpacity style={styles.buttons}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AddCard', { deckName })}
+              style={styles.buttons}
+            >
               <Text style={styles.buttonText}>Add Card</Text>
             </TouchableOpacity>
           </View>
