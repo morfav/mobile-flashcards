@@ -1,50 +1,10 @@
-const initialDecks = {
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      },
-    ],
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      },
-    ],
-  },
-  React1: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      },
-    ],
-  },
-  JavaScript1: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      },
-    ],
-  },
-};
+import { UPDATE_DECKS_IN_STATE } from '../actions';
 
-export default function decks(state = initialDecks, action) {
-  return state;
+export default function decks(state = {}, action) {
+  switch (action.type) {
+    case UPDATE_DECKS_IN_STATE:
+      return action.decks;
+    default:
+      return state;
+  }
 }

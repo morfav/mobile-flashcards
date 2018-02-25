@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, StyleSheet } from 'react-native';
+
+import { saveDeckTitle } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,32 +42,56 @@ const styles = StyleSheet.create({
   },
 });
 
-const NewDeck = ({ dispatch }) => (
-  <View style={styles.container}>
-    <View>
-      <Text style={styles.title}>What is the title of your new deck?</Text>
-    </View>
-    <View>
-      <TextInput style={styles.textInput}>Deck Title</TextInput>
-    </View>
-    <View>
-      <View style={styles.submitButtonView}>
-        <TouchableOpacity style={styles.submitButton}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  </View>
-);
+class NewDeck extends Component {
+  constructor() {
+    super();
+    this.state = { newDeckName: '' };
+    this.addDeckAndNavigate = this.addDeckAndNavigate.bind(this);
+  }
+
+  addDeckAndNavigate() {
+    const { addNewDeck, navigation } = this.props;
+    addNewDeck(this.state.newDeckName);
+    navigation.navigate('Decks');
+    this.setState({ newDeckName: '' });
+  }
+
+  render() {
+    const { newDeckName } = this.state;
+    return (
+      <KeyboardAvoidingView keyboardVerticalOffset={1} behavior="position" style={styles.container}>
+        <View>
+          <Text style={styles.title}>What is the title of your new deck?</Text>
+        </View>
+        <View>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Deck Title"
+            value={newDeckName}
+            onChangeText={text => this.setState({ newDeckName: text })}
+          />
+        </View>
+        <View>
+          <View style={styles.submitButtonView}>
+            <TouchableOpacity style={styles.submitButton} onPress={() => this.addDeckAndNavigate()}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    );
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    addNewDeck: deckName => dispatch(saveDeckTitle(deckName)),
   };
 }
 
 NewDeck.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  addNewDeck: PropTypes.func.isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(NewDeck);

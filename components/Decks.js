@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+
+import { loadDecks } from '../actions';
 
 
 const styles = StyleSheet.create({
@@ -25,31 +27,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const Decks = ({ decks, navigation }) => (
-  <View style={styles.container}>
-    <FlatList
-      data={Object.entries(decks)}
-      keyExtractor={item => item[0]}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate(
-            'Deck',
-            { deckName: item[0] },
+class Decks extends Component {
+  componentDidMount() {
+    this.props.getAllDecks();
+  }
+
+  render() {
+    const { decks, navigation } = this.props;
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={Object.entries(decks)}
+          keyExtractor={item => item[0]}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate(
+                'Deck',
+                { deckName: item[0] },
+              )}
+            >
+              <View>
+                <Text style={styles.item}>
+                  {item[0]}
+                </Text>
+                <Text style={styles.itemCount}>
+                  {`${item[1].questions.length} card${item[1].questions.length !== 1 ? 's' : ''}`}
+                </Text>
+              </View>
+            </TouchableOpacity>
           )}
-        >
-          <View>
-            <Text style={styles.item}>
-              {item[0]}
-            </Text>
-            <Text style={styles.itemCount}>
-              {`${item[1].questions.length} card${item[1].questions.length !== 1 ? 's' : ''}`}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      )}
-    />
-  </View>
-);
+        />
+      </View>
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return {
@@ -57,9 +68,16 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    getAllDecks: () => dispatch(loadDecks()),
+  };
+}
+
 Decks.propTypes = {
   decks: PropTypes.instanceOf(Object).isRequired,
   navigation: PropTypes.instanceOf(Object).isRequired,
+  getAllDecks: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Decks);
+export default connect(mapStateToProps, mapDispatchToProps)(Decks);

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { Constants } from 'expo';
 import { TabNavigator, StackNavigator } from 'react-navigation';
@@ -88,7 +89,7 @@ const MainNavigator = StackNavigator({
 });
 
 const App = () => (
-  <Provider store={createStore(decksReducer)}>
+  <Provider store={createStore(decksReducer, applyMiddleware(thunk))}>
     <View style={styles.container}>
       <FlashcardsStatusBar backgroundColor="orange" barStyle="light-content" />
       <MainNavigator />
