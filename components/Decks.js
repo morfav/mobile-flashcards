@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
-import { loadDecks } from '../actions';
+import { loadDecks, clear } from '../actions';
 
 
 const styles = StyleSheet.create({
@@ -70,7 +70,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllDecks: () => dispatch(loadDecks()),
+    getAllDecks: () => dispatch(clear()),
   };
 }
 

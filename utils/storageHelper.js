@@ -21,12 +21,17 @@ export function saveDeckTitle(deckName) {
   }));
 }
 
-export function addCardToDeck(deckName, card) {
-  const deckToUpdate = getDeck(deckName);
-  const deckToSave = Object.assign({}, deckToUpdate, { questions: [...deckToUpdate.questions, card] });
+export function addCardToDeck(deckName, card, existingQuestions) {
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-    deckToSave,
+    [deckName]: {
+      title: deckName,
+      questions: [...existingQuestions, card.question],
+    },
   }));
+}
+
+export function clear() {
+  return AsyncStorage.removeItem(DECKS_STORAGE_KEY);
 }
 
 // export function setLocalNotification() {
