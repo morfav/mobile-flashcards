@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttons: {
+    flex: 0.6,
     margin: 5,
     borderWidth: 1,
     borderRadius: 7,
@@ -33,8 +34,6 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     padding: 18,
-    paddingRight: 70,
-    paddingLeft: 70,
     fontSize: 18,
   },
   startQuiz: {
@@ -76,7 +75,10 @@ class Deck extends Component {
           </View>
           <View>
             <View style={styles.buttonsView}>
-              <TouchableOpacity style={[styles.buttons, styles.startQuiz, { marginBottom: 30 }]}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Quiz', { deckName })}
+                style={[styles.buttons, styles.startQuiz, { marginBottom: 30 }]}
+              >
                 <Text style={[styles.buttonText, { color: 'white' }]}>Start Quiz</Text>
               </TouchableOpacity>
             </View>

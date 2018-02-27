@@ -70,7 +70,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllDecks: () => dispatch(clear()),
+    // getAllDecks: () => dispatch(clear()),
+    getAllDecks: () => dispatch(loadDecks()),
   };
 }
 

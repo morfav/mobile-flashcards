@@ -25,7 +25,7 @@ export function addCardToDeck(deckName, card, existingQuestions) {
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
     [deckName]: {
       title: deckName,
-      questions: [...existingQuestions, card.question],
+      questions: [...existingQuestions, card],
     },
   }));
 }

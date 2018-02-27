@@ -12,6 +12,8 @@ import AddCard from './components/AddCard';
 import Decks from './components/Decks';
 import NewDeck from './components/NewDeck';
 import Deck from './components/Deck';
+import Quiz from './components/Quiz';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -80,6 +82,16 @@ const MainNavigator = StackNavigator({
     screen: AddCard,
     navigationOptions: {
       title: 'Add Card',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'blue',
+      },
+    },
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'blue',
