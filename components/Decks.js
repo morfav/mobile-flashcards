@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { loadDecks } from '../actions';
-import { clearLocalNotification, setLocalNotification } from '../utils/helper';
+import { setLocalNotification } from '../utils/helper';
 
 
 const styles = StyleSheet.create({
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 class Decks extends Component {
   componentDidMount() {
     this.props.getAllDecks();
-    clearLocalNotification().then(setLocalNotification);
+    setLocalNotification();
   }
 
   render() {
