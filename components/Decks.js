@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
-import { loadDecks, clear } from '../actions';
+import { loadDecks } from '../actions';
+import { clearLocalNotification, setLocalNotification } from '../utils/helper';
 
 
 const styles = StyleSheet.create({
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
 class Decks extends Component {
   componentDidMount() {
     this.props.getAllDecks();
+    clearLocalNotification().then(setLocalNotification);
   }
 
   render() {
@@ -70,7 +72,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    // getAllDecks: () => dispatch(clear()),
     getAllDecks: () => dispatch(loadDecks()),
   };
 }

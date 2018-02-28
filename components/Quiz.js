@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
+import { clearLocalNotification, setLocalNotification } from '../utils/helper';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -49,6 +51,11 @@ const styles = StyleSheet.create({
   incorrectBtn: {
     backgroundColor: 'red',
   },
+  restartQuizBtn: {
+    borderRadius: 7,
+    margin: 80,
+    backgroundColor: 'black',
+  },
 });
 
 class Quiz extends Component {
@@ -69,9 +76,28 @@ class Quiz extends Component {
       );
     }
     if (deck.questions.length === cardIndex) {
+      clearLocalNotification().then(setLocalNotification);
       return (
         <View style={styles.container}>
-          <Text style={styles.questionText}>{`You scored ${(correctCount * 100.0) / deck.questions.length}% answers correct`}</Text>
+          <Text style={styles.questionText}>
+            {`You scored ${correctCount} / ${deck.questions.length} answers correct`}
+          </Text>
+          <View>
+            <TouchableOpacity
+              style={styles.restartQuizBtn}
+              onPress={() => this.setState({
+                cardIndex: 0,
+                correctCount: 0,
+                showingQuestion: true,
+              })}
+            >
+              <Text
+                style={[styles.buttonText, { padding: 20, fontSize: 18 }]}
+              >
+                Restart quiz
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }
@@ -100,6 +126,7 @@ class Quiz extends Component {
               onPress={() => this.setState({
                 cardIndex: cardIndex + 1,
                 correctCount: correctCount + 1,
+                showingQuestion: true,
               })}
               style={[styles.buttons, styles.correctBtn]}
             >
@@ -109,10 +136,17 @@ class Quiz extends Component {
           <View>
             <View style={styles.buttonsView}>
               <TouchableOpacity
-                onPress={() => this.setState({ cardIndex: cardIndex + 1 })}
+                onPress={() => this.setState({
+                  cardIndex: cardIndex + 1,
+                  showingQuestion: true,
+                })}
                 style={[styles.buttons, styles.incorrectBtn, { marginBottom: 100 }]}
               >
-                <Text style={[styles.buttonText, { color: 'white' }]}>Incorrect</Text>
+                <Text
+                  style={[styles.buttonText, { color: 'white' }]}
+                >
+                  Incorrect
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -127,7 +161,6 @@ function mapStateToProps(state, { navigation }) {
 
   return {
     deck: state[deckName],
-    deckName,
   };
 }
 
@@ -135,7 +168,6 @@ Quiz.propTypes = {
   deck: PropTypes.shape({
     questions: PropTypes.arrayOf(Object).isRequired,
   }).isRequired,
-  deckName: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Quiz);

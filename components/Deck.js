@@ -103,6 +103,7 @@ Deck.propTypes = {
     questions: PropTypes.arrayOf(Object).isRequired,
   }).isRequired,
   deckName: PropTypes.string.isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps)(Deck);

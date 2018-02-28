@@ -55,13 +55,15 @@ class AddCard extends Component {
   }
 
   addCardAndNavigate() {
-    const { addCardToDeck, deckName, navigation, existingQuestions } = this.props;
+    const {
+      addCardToDeck, deckName, navigation, existingQuestions,
+    } = this.props;
     const cardObject = {
       question: this.state.question,
       answer: this.state.answer,
     };
     addCardToDeck(deckName, cardObject, existingQuestions);
-    this.props.navigation.dispatch(NavigationActions.back({
+    navigation.dispatch(NavigationActions.back({
       key: null,
     }));
     this.setState({
@@ -115,7 +117,8 @@ function mapStateToProps(state, { navigation }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addCardToDeck: (deckName, card, existingQuestions) => dispatch(addCard(deckName, card, existingQuestions)),
+    addCardToDeck: (deckName, card, existingQuestions) =>
+      dispatch(addCard(deckName, card, existingQuestions)),
   };
 }
 
