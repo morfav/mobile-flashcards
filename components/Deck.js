@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,6 +52,13 @@ class Deck extends Component {
 
   render() {
     const { deck, deckName, navigation } = this.props;
+    if (typeof deck.title === 'undefined') {
+      return (
+        <View style={{ flex: 1 }}>
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <View>
@@ -100,10 +107,14 @@ function mapStateToProps(state, { navigation }) {
 
 Deck.propTypes = {
   deck: PropTypes.shape({
-    questions: PropTypes.arrayOf(Object).isRequired,
-  }).isRequired,
+    questions: PropTypes.arrayOf(Object),
+  }),
   deckName: PropTypes.string.isRequired,
   navigation: PropTypes.instanceOf(Object).isRequired,
+};
+
+Deck.defaultProps = {
+  deck: { questions: [] },
 };
 
 export default connect(mapStateToProps)(Deck);

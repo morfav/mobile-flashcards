@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 import { clearLocalNotification, setLocalNotification } from '../utils/helper';
 
@@ -51,10 +52,15 @@ const styles = StyleSheet.create({
   incorrectBtn: {
     backgroundColor: 'red',
   },
-  restartQuizBtn: {
+  quizFinishedBtns: {
     borderRadius: 7,
     margin: 80,
+    marginTop: 0,
+    marginBottom: 20,
     backgroundColor: 'black',
+  },
+  returnToDeckBtn: {
+    marginBottom: 90,
   },
 });
 
@@ -66,7 +72,7 @@ class Quiz extends Component {
   }
 
   render() {
-    const { deck } = this.props;
+    const { deck, navigation } = this.props;
     const { cardIndex, correctCount, showingQuestion } = this.state;
     if (deck.questions.length === 0) {
       return (
@@ -84,7 +90,7 @@ class Quiz extends Component {
           </Text>
           <View>
             <TouchableOpacity
-              style={styles.restartQuizBtn}
+              style={styles.quizFinishedBtns}
               onPress={() => this.setState({
                 cardIndex: 0,
                 correctCount: 0,
@@ -95,6 +101,18 @@ class Quiz extends Component {
                 style={[styles.buttonText, { padding: 20, fontSize: 18 }]}
               >
                 Restart quiz
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.quizFinishedBtns, styles.returnToDeckBtn]}
+              onPress={() => navigation.dispatch(NavigationActions.back({
+                key: null,
+              }))}
+            >
+              <Text
+                style={[styles.buttonText, { padding: 20, fontSize: 18 }]}
+              >
+                Return to deck
               </Text>
             </TouchableOpacity>
           </View>
@@ -168,6 +186,7 @@ Quiz.propTypes = {
   deck: PropTypes.shape({
     questions: PropTypes.arrayOf(Object).isRequired,
   }).isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps)(Quiz);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Keyboard, StyleSheet } from 'react-native';
 
 import { saveDeckTitle } from '../actions';
 
@@ -51,8 +51,10 @@ class NewDeck extends Component {
 
   addDeckAndNavigate() {
     const { addNewDeck, navigation } = this.props;
-    addNewDeck(this.state.newDeckName);
-    navigation.navigate('Decks');
+    const { newDeckName } = this.state;
+    Keyboard.dismiss();
+    addNewDeck(newDeckName);
+    navigation.navigate('Deck', { deckName: newDeckName });
     this.setState({ newDeckName: '' });
   }
 
